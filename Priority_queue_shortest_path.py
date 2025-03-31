@@ -1,4 +1,4 @@
-'''WE gonna implement a priority queue based shortest distance finder'''
+# Your first line of Python '''WE gonna implement a priority queue based shortest distance finder'''
 
 def connect_nodes(nodes_dict, node1, node2, dist):
     '''It connects them in a dictionary of connected nodes'''
@@ -44,10 +44,12 @@ def get_shortest_path(pres_node,end_node ):
     jump_node = min_path[-1]
 
     print('jump_node',jump_node)
+    path,dist=get_shortest_path(jump_node,end_node)
+    return (path,dist)
 
-    path, dist = get_shortest_path(jump_node,end_node)
+'''    path, dist = get_shortest_path(jump_node,end_node)
 
-    print( 'path:',path,'dist',dist)
+    print( 'path:',path,'dist',dist)'''
 
 
 
@@ -95,21 +97,35 @@ node3 = '3'
 node4 = '4'
 node5 = '5'
 node6 = '6'
+node7 = '7'
+node8 = '8'
 
 
 #now we build the network
-connect_nodes(Nodes_dict,node0,node1,1)
-connect_nodes(Nodes_dict,node0,node3,12)
-connect_nodes(Nodes_dict,node1,node2,5)
-connect_nodes(Nodes_dict,node2,node3,3)
+connect_nodes(Nodes_dict,node0,node1,4)
+connect_nodes(Nodes_dict,node0,node7,8)
+connect_nodes(Nodes_dict,node1,node7,11)
+connect_nodes(Nodes_dict,node1,node2,8)
+connect_nodes(Nodes_dict,node2,node8,2)
+connect_nodes(Nodes_dict,node2,node3,7)
 connect_nodes(Nodes_dict,node2,node5,4)
 connect_nodes(Nodes_dict,node3,node4,9)
-connect_nodes(Nodes_dict,node5,node4,1)
-connect_nodes(Nodes_dict,node4,node6,3)
+connect_nodes(Nodes_dict,node3,node5,14)
+connect_nodes(Nodes_dict,node4,node5,10)
+connect_nodes(Nodes_dict,node5,node6,2)
+connect_nodes(Nodes_dict,node6,node8,6)
+connect_nodes(Nodes_dict,node6,node7,1)
+connect_nodes(Nodes_dict,node7,node8,7)
+
+
+
 
 #yeah, that was stupid. I could've just used it in. but, practice is a good thing yeah? also, that way, I don't have to define the
 #nodes dict at the beginning.
 
 print(Nodes_dict)
 
-get_shortest_path(node0,node6)
+path,distance = get_shortest_path(node0,node6)
+
+print('path',path,'distance',distance)
+
