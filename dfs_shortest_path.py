@@ -29,11 +29,11 @@ dist_dict = {}
 def get_distances(node,dist_so_far=0):
     '''this function should take in a node and get me distances to all other nodes'''
     #print('marked',marked,'node on',node.id,'dist so far',dist_so_far)
-    print(dict(sorted(dist_dict.items())))
+    #print(dict(sorted(dist_dict.items())))
 
     
         
-    if node.id in dist_dict.keys():
+    if node.id in dist_dict.keys(): # here we see if dist to that node exists previously. and if it does, then we compare
         if dist_dict[node.id]>dist_so_far:
             dist_dict[node.id]=dist_so_far
         else:
@@ -43,7 +43,7 @@ def get_distances(node,dist_so_far=0):
     else:
         dist_dict[node.id] = dist_so_far
 
-    if node.id in marked:
+    if node.id in marked: #if it's a marked node, then we won't get to that point again to see it. and we gotta unmark it!! shit, I forgot.
         return
     else:
 
@@ -51,6 +51,9 @@ def get_distances(node,dist_so_far=0):
     
     for connected_node,weight in node.connections:
         get_distances(connected_node,dist_so_far+weight)
+
+    #here we gotta demark it, so that , it can again be viewed from another path
+    marked.pop()
 
 
 
@@ -84,13 +87,13 @@ connect_nodes(node7,node8,7)
 
 
 
-
+print("let check sample connections:")
 print_connections(node1)
 
 get_distances(node0)
 
 print(dict(sorted(dist_dict.items())))
-print(marked)
+
 
 '''node0 = '0'
 node1 = '1'
