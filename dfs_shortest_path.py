@@ -91,3 +91,29 @@ get_distances(node0)
 
 print(dict(sorted(dist_dict.items())))
 print(marked)
+
+'''node0 = '0'
+node1 = '1'
+node2 = '2'
+node3 = '3'
+node4 = '4'
+node5 = '5'
+node6 = '6'
+node7 = '7'
+node8 = '8'
+
+#now we build the network
+connect_nodes(Nodes_dict,node0,node1,4)
+connect_nodes(Nodes_dict,node0,node7,8)
+connect_nodes(Nodes_dict,node1,node7,11)
+connect_nodes(Nodes_dict,node1,node2,8)
+connect_nodes(Nodes_dict,node2,node8,2)
+connect_nodes(Nodes_dict,node2,node3,7)
+connect_nodes(Nodes_dict,node2,node5,4)
+connect_nodes(Nodes_dict,node3,node4,9)
+connect_nodes(Nodes_dict,node3,node5,14)
+connect_nodes(Nodes_dict,node4,node5,10)
+connect_nodes(Nodes_dict,node5,node6,2)
+connect_nodes(Nodes_dict,node6,node8,6)
+connect_nodes(Nodes_dict,node6,node7,1)
+connect_nodes(Nodes_dict,node7,node8,7)'''
