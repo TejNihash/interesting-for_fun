@@ -47,37 +47,28 @@ def simulate(bodies:heavenly_body,dt):
             a = (G*bodyj.mass)/(roj**2)
             print("a",a)
 
-            teta = math.atan((bodyj.ypos-one.ypos)/(bodyj.xpos-one.xpos))
+            teta = math.atan2((bodyj.ypos-one.ypos),(bodyj.xpos-one.xpos))
             ax_dash = a*math.cos(teta)
             ay_dash = a*math.sin(teta)
 
-            if bodyj.xpos>one.xpos:
-                dirx = 1
-                diry = 1
-            else:
-                dirx = -1
-                diry = -1
-            '''if bodyj.ypos>one.ypos:
-                diry = 1
-            else:
-                diry = 1'''
-            print("dir",dirx)
-            ax+=dirx*ax_dash*10
-            ay+=diry*ay_dash*10
+           
+            
+            ax+=ax_dash*10
+            ay+=ay_dash*10
 
         
-        print("ax",ax*dt)  
+        #print("ax",ax*dt)  
         vx_dash = one.xvel +ax*dt
         vy_dash = one.yvel + ay*dt
 
-        px_dash = one.xpos + vx_dash*dt
-        py_dash  = one.ypos +vy_dash*dt
+        px_dash = one.xpos + one.xvel*dt
+        py_dash  = one.ypos +one.yvel*dt
 
         one.update_vel(vx_dash,vy_dash)
         one.update_pos(px_dash,py_dash)
 
-        print("velo",vx_dash*dt,vy_dash*dt)
-        print("pos",px_dash*dt,py_dash*dt)
+        #print("velo",vx_dash*dt,vy_dash*dt)
+        #print("pos",px_dash*dt,py_dash*dt)
 
 
 
@@ -114,15 +105,16 @@ earth_pos = pygame.Vector2(screen.get_width() / 3, screen.get_height() / 3)
 venus_pos = pygame.Vector2(2*screen.get_width() / 3, 2.5*screen.get_height() / 3)
 
 #intialize the bodies
-sun = heavenly_body(1.989*10**30,sun_pos.x,sun_pos.y,0,0,40)
+sun = heavenly_body(1.989*10**30,sun_pos.x,sun_pos.y,1,0,12)
 
-earth = heavenly_body(5.972*10**24,earth_pos.x,earth_pos.y,1,3,10)
+earth = heavenly_body(5.972*10**30,earth_pos.x,earth_pos.y,1,3,10)
 
-venus = heavenly_body(4.867*10**24,venus_pos.x,venus_pos.y,1,-2,8)
+venus = heavenly_body(4.867*10**30,venus_pos.x,venus_pos.y,1,-2,8)
 
 list_bodies = [sun,earth,venus]
 earth_poses = []
 venus_poses = []
+sun_poses = []
 
 
 
@@ -136,26 +128,20 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     print_bg(stars_coords=stars_coords)
 
-    pygame.draw.circle(screen, "red", (sun.xpos,sun.ypos), 40)
+    pygame.draw.circle(screen, "red", (sun.xpos,sun.ypos), 12)
     pygame.draw.circle(screen,"blue",(earth.xpos,earth.ypos),10)
     pygame.draw.circle(screen,"yellow",(venus.xpos,venus.ypos),8)
     venus_poses.append((int(venus.xpos),int(venus.ypos)))
     earth_poses.append((int(earth.xpos),int(earth.ypos)))
+    sun_poses.append((int(sun.xpos),int(sun.ypos)))
+
     print_tracing(venus_poses,"yellow")
     print_tracing(earth_poses,"blue")
+    print_tracing(sun_poses,"red")
 
 
     simulate(list_bodies,dt)
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        sun.ypos -= 300 * dt
-    if keys[pygame.K_s]:
-        sun.ypos += 300 * dt
-    if keys[pygame.K_a]:
-        sun.xpos -= 300 * dt
-    if keys[pygame.K_d]:
-        sun.xpos += 300 * dt
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -163,7 +149,9 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(60)/100
+    clock.tick(60)
+    dt = 0.1  # fixed time step
+
     print("dt",dt)
 
 pygame.quit()
